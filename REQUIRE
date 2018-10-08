@@ -1,7 +1,6 @@
 julia 0.6
-PyPlot
+DataStructures
 JSON
 ModiaMath
+StaticArrays
 Unitful
-DataStructures
-Dates

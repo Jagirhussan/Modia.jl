@@ -1,7 +1,13 @@
 module HeatTransfer2D
 
 using Modia
-using ModiaMath
+
+# Desired:
+#   using ModiaMath: plot
+#
+# In order that ModiaMath need not to be defined in the user environment, it is included via Modia:
+using Modia.ModiaMath: plot
+
 
 # Definition of model  
 const N      = 30 # 100 # Number of nodes in x-direction (same number of nodes in y-direction
@@ -83,21 +89,21 @@ end
 end 
 
 result = simulate(HeatTransfer, 30)
-#ModiaMath.plot(result, "T", figure=22)
+#plot(result, "T", figure=22)
 
-res = Dict{Symbol,AbstractArray{T,1} where T}()
-res[:time] = result["time"]
+res = Dict{AbstractString,Any}()
+res["time"] = result["time"]
 T = result["T"]
 T = reshape(T, size(T,1), N, N)
-v1 = Symbol("T[$(div(N,2)),1]")
-v2 = Symbol("T[1, $(div(N,2))]")
-v3 = Symbol("T[$N,1]")
-v4 = Symbol("T[1, $N]")
+v1 = "T[$(div(N,2)),1]"
+v2 = "T[1, $(div(N,2))]"
+v3 = "T[$N,1]"
+v4 = "T[1, $N]"
 res[v1] = T[:, div(N,2),1]
 res[v2] = T[:, 1, div(N,2)]
 res[v3] = T[:, N, 1]
 res[v4] = T[:, 1, N]
 
-ModiaMath.plot(res, (v1, v2, v3, v4), figure=20, heading="HeatTransfer2D: N=$N, temperature [K]")
+plot(res, (v1, v2, v3, v4), figure=20, heading="HeatTransfer2D: N=$N, temperature [K]")
 
 end

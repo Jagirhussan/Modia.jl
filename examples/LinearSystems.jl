@@ -4,7 +4,13 @@ println("\nLinearSystems: Demonstrates type and size deduction.")
 
 using Modia
 using Modia.Blocks: ABCD, Switch
-using ModiaMath: plot
+
+
+# Desired:
+#   using ModiaMath: plot
+#
+# In order that ModiaMath need not to be defined in the user environment, it is included via Modia:
+using Modia.ModiaMath: plot
 
 
 @model MySISOABCD begin
@@ -31,6 +37,6 @@ result = checkSimulation(MySISOABCD, 10, "x", 0.5000001198147023, logTranslation
 end
 
 result = checkSimulation(MyMIMOABCD, 10, "x", 0.004778288940817275, storeEliminated=false) # storeEliminated=false needed. Investigate
-# plot(result, "x", heading="MyMIMOABCD with generic switch", figure=14)
+plot(result, "x", heading="MyMIMOABCD with generic switch", figure=14)
 
 end

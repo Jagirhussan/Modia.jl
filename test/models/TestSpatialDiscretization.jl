@@ -1,7 +1,13 @@
 module TestSpatialDiscretization
 
 using Modia
-using ModiaMath:plot
+
+# Desired:
+#   using ModiaMath: plot
+#
+# In order that these packages need not to be defined in the user environment, they are included via Modia:
+using Modia.ModiaMath: plot
+
 
 const n = 5
 @model SpatialDiscretization begin
@@ -14,7 +20,7 @@ const n = 5
 end
 
 result = simulate(SpatialDiscretization, 1)
-# plot(result, "u", figure=1)
+plot(result, "u", figure=1)
 
 
 
@@ -32,7 +38,7 @@ splice(uodd, ueven) = [if isodd(i); uodd[div(i,2)+1] else ueven[div(i,2)] end fo
 end
 
 result = simulate(SpatialDiscretization2, 1, logTranslation=true, storeEliminated=false)
-# plot(result, "ueven", figure=2)
+plot(result, "ueven", figure=2)
 
 
 n = 100
@@ -64,7 +70,7 @@ end
 end
 
 @time result = simulate(SpatialDiscretization4, 1, logTranslation=true, storeEliminated=false)
-# plot(result, "ueven", figure=4)
+plot(result, "ueven", figure=4)
 
 
 maskEven(n) = [if isodd(i); 0 else 1 end for i in 1:n]
@@ -77,6 +83,6 @@ maskEven(n) = [if isodd(i); 0 else 1 end for i in 1:n]
 end
 
 @time result = simulate(SpatialDiscretization5, 1, logTranslation=true, storeEliminated=false, removeSingularities=false)
-# plot(result, "u", figure=5)
+plot(result, "u", figure=5)
 
 end
